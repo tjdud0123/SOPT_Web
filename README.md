@@ -12,9 +12,7 @@
 - async & await 비동기 처리
 - API fetch
 - vanilla js
-- 모달 만들기
 - 다크 모드 토글
-- 이미지 슬라이더
 
 ### 🐝 week2 스터디 환경셋팅
 - ESLint
