@@ -14,6 +14,8 @@
 - vanilla js
 - 다크 모드 토글
 
+![](https://im6.ezgif.com/tmp/ezgif-6-f9111f500e55.gif)
+
 ### 🐝 week2 스터디 환경셋팅
 - ESLint
 - prettier
