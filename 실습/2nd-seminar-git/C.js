@@ -16,5 +16,5 @@ const whiteColors = {
     card: '#ffffff',
     infoTxt: '#000000',
     repo: '#f3f3f3',
-    border: '#d6d6d6'
+    border: '#393c42'
 }
