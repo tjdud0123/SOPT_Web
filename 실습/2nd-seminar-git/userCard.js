@@ -1,12 +1,6 @@
-const BASE_URI = "https://api.github.com/users/"
-
-const $main = document.getElementById("main"); 
-const $form = document.getElementById("form");
-const $input = document.getElementById("input");
-
 // user 이름
 const getUser = async (userName) => {
-    const response = await fetch(`${BASE_URI}${userName}`);
+    const response = await fetch(`${BASE_URL}${userName}`);
     const userData = await response.json();
     return userData;
 }
@@ -34,7 +28,7 @@ const createUserCard = (user) => {
 
 // 레포지토리
 const getRepos = async (userName) => {
-    const response = await fetch(`${BASE_URI}${userName}/repos`);
+    const response = await fetch(`${BASE_URL}${userName}/repos`);
     const userRepos = await response.json();
     return userRepos;
 };
@@ -51,20 +45,9 @@ const getRepos = async (userName) => {
     });
 }
 
-const resetForm = () => $input.value = ''
-
 const createInfoCard = async (user) => {
     const userData = await getUser(user);
     createUserCard(userData);
     const userRepos = await getRepos(user);
     addReposToCard(userRepos);
 }
-
-$form.addEventListener("submit", (e) =>{
-    e.preventDefault(); // 새로고침 방지
-    const user = $input.value;
-    if(user) {
-        createInfoCard(user);
-        resetForm();
-    }
-})
