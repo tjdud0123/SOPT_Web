@@ -4,7 +4,7 @@ const $main = document.getElementById("main");
 const createBasicDOM = () => {
     const BasicHTML = `
     <label class="switch">
-        <input type="checkbox" checked>
+        <input id="toggleBtn" type="checkbox" checked>
         <span class="slider round"></span>
     </label>
     <form id="form">
@@ -12,6 +12,22 @@ const createBasicDOM = () => {
     </form>`
     $basic.innerHTML = BasicHTML
 }
+
+// 컬러 모드
+const setColorType = (colors) =>{
+    for (const [key, value] of Object.entries(colors)){
+        document.documentElement.style.setProperty(`--${key}`, `${value}`);
+    }
+}
+
+const addEventListenerToToggle = ($toggleBtn) => {
+    $toggleBtn.addEventListener("click", (e) => {
+        const isDarkMode = e.target.checked
+        isDarkMode ? setColorType(darkColors) : setColorType(whiteColors)
+    })
+}
+
+// 검색
 const resetForm = ($input) => $input.value = ''
 
 const addEventListenerToForm = ($form, $input) => {
@@ -29,6 +45,8 @@ const basicInit = (() => {
     createBasicDOM()
     const $form = document.getElementById("form");
     const $input = document.getElementById("input");
+    const $toggleBtn = document.getElementById("toggleBtn");
+    addEventListenerToToggle($toggleBtn)
     addEventListenerToForm($form, $input)
 })()
 
