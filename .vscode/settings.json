@@ -1,0 +1,22 @@
+{   
+    // 아이콘, 폰트, 테마 컬러 등
+    "workbench.iconTheme": "material-icon-theme",
+    "editor.fontFamily": "Fira Code, Menlo, Monaco, 'Courier New', monospace",
+    "workbench.colorTheme": "Night Owl",
+
+    // 에디터 글자 크기
+    "editor.fontSize": 14,
+
+    // 에밋 문법 자동완성 defualt가 True 인듯
+    "emmet.triggerExpansionOnTab": true,
+
+    // 디폴트 포메터 설정
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+    // 저장 시 코드 정리
+    "editor.formatOnSave": true,
+
+    // 프리티어 관련
+    "prettier.requireConfig": true,
+
+}
