@@ -1,7 +1,8 @@
 import React from 'react';
 
-function SearchResult() {
-  return <div>SearchResult</div>;
+function SearchResult({ user }) {
+  //console.log(user);
+  return <div>{user && user.name}</div>;
 }
 
 export default SearchResult;
