@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react'; // 최상위 부모를 만들고 싶지 않을 때
+import React from 'react';
 import SearchInput from './components/SearchInput';
 import SearchResult from './components/SearchResult';
 import { getUserAPI } from './lib/api';
@@ -16,7 +16,7 @@ function App() {
 
   return (
     <>
-      <SearchInput onSubmit={getUser} />
+      <SearchInput getUser={getUser} />
       <SearchResult user={user} />
     </>
   );
