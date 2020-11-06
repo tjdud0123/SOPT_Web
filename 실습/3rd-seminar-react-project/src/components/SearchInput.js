@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 function SearchInput({ onSubmit }) {
+  console.log(onSubmit);
   const [input, setInput] = useState('');
 
   const handleChange = e => {

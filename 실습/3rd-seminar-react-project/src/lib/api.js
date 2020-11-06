@@ -6,6 +6,5 @@ const client = axios.create({
 
 export const getUserAPI = async userName => {
   const data = await client.get(userName);
-  //console.log(data.data);
   return data.data;
 };
