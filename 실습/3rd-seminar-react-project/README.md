@@ -221,10 +221,68 @@ function SearchInput({ getUser })
 ```
 
 
-## SCSS 이용해 Style 적용하기
-` $ yarn add  node-scss`
+## ✔️ SCSS 이용해 Style 적용하기
 
-## Input창 UX 개선
+#### 🐝 sass 라이브러리 다운
+` $ yarn add node-sass@4.14.1`
+
+#### 🐝 scss 파일 작성 및 css 적용
+
+📃 App.scss
+```css
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+...
+```
+📃 App.js
+```js
+import './App.scss';
+function App() {
+  ...
+  return (
+    <div className="search-wrapper">
+      ...
+    </div>
+  );
+}
+```
+
+📃 SearchResult.js
+```js
+import '../App.scss';
+
+function SearchResult({ user }) {
+  return (
+    user && (
+      <div className="user-card">
+        <img className="user-avatar" src={user.avatar_url} alt={user.name} />
+        <div className="user-info">
+          ...
+          <ul className="user-info-list">
+          ...
+```
+
+📃 SearchInput.js
+```js
+import '../App.scss';
+function SearchInput({ getUser }) {
+ ...
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        className="search-input"
+        ...
+      />
+    </form>
+  );
+}
+```
+
+## Input창 UX 개선 - useRef 사용으로 dom focus 및 리셋
 
 ## Promise 상태에 따른 UI 처리
 
