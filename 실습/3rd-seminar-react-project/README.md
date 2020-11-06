@@ -28,7 +28,6 @@ src/logo.svg
 
 📃 App.js
 ```js
-import './App.css';
 import React from 'react';
 import SearchInput from './components/SearchInput';
 import SearchResult from './components/SearchResult';
@@ -37,7 +36,7 @@ function App() {
   return (
     <>
       <SearchInput />
-      <SearchResult />
+      <SearchResult usesr={user} />
     </>
   );
 }
@@ -111,38 +110,6 @@ export default SearchResult;
 
 ```
 
-## ✔️ API 연결하기 (Axios 사용), API 파일 분리
-
-#### 🐝 폴더 생성
-```
-src
- ㄴ components
- ㄴ lib
-     ㄴ api.js 
-```
-
-#### 🐝 Axios 라이브러리 다운
-
-` $ yarn add axios`
-
-📃 api.js
-```js
-import axios from 'axios';
-
-// create을 사용하는 경우 호출 config 커스터마이징 가능
-// You can create a new instance of axios with a custom config
-
-const client = axios.create({
-  baseURL: 'https://api.github.com/users/',
-});
-
-export const getUserAPI = async userName => {
-  const data = await client.get(userName);
-  return data.data;
-};
-
-```
-
 ## ✔️ 데이터 하위 컴포넌트에 넘기기
 
 📃 App.js
@@ -161,6 +128,40 @@ function App() {
       <SearchResult user={user} />
     </>
   );
+```
+
+## ✔️ API 연결하기 (Axios 사용), API 파일 분리
+
+#### 🐝 폴더 생성
+```
+src
+ ㄴ components
+ ㄴ lib
+     ㄴ api.js 
+```
+
+#### 🐝 Axios 라이브러리 다운
+
+` $ yarn add axios`
+
+#### 🐝 api.js 코드 작성
+
+📃 api.js
+```js
+import axios from 'axios';
+
+// create을 사용하는 경우 호출 config 커스터마이징 가능
+// You can create a new instance of axios with a custom config
+
+const client = axios.create({
+  baseURL: 'https://api.github.com/users/',
+});
+
+export const getUserAPI = async userName => {
+  const { data } = await client.get(userName); // data.data 
+  return data;
+};
+
 ```
 
 ## ✔️ Input 값 연결하여 API 호출
