@@ -7,7 +7,6 @@
 - for in
 - forEach
 
-
 ### 🐝 week2 실습 및 과제
 - async & await 비동기 처리
 - API fetch
