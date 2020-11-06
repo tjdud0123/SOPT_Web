@@ -1,14 +1,15 @@
 import React from 'react';
+import '../App.scss';
 
 function SearchResult({ user }) {
   return (
     user && (
-      <div>
-        <img src={user.avatar_url} alt={user.name} />
-        <div>
+      <div className="user-card">
+        <img className="user-avatar" src={user.avatar_url} alt={user.name} />
+        <div className="user-info">
           <h2>{user.name}</h2>
           <p>{user.bio}</p>
-          <ul>
+          <ul className="user-info-list">
             <li>
               <strong>Followers</strong> {user.followers}
             </li>

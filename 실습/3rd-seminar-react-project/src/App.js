@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import React from 'react';
 import SearchInput from './components/SearchInput';
 import SearchResult from './components/SearchResult';
@@ -15,10 +15,10 @@ function App() {
   };
 
   return (
-    <>
+    <div className="search-wrapper">
       <SearchInput getUser={getUser} />
       <SearchResult user={user} />
-    </>
+    </div>
   );
 }
 
