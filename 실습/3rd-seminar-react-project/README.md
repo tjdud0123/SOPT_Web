@@ -1,70 +1,230 @@
-# Getting Started with Create React App
+## ✔️ React App 만들기
+` $ npx create-react-app 3rd-seminar-react-project `
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## ✔️ 불필요한 아이콘, 코드 삭제 및 변경
 
-## Available Scripts
+#### 🐝 코드 수정
+📃 public/index.html
 
-In the project directory, you can run:
+`<html lang="en">` ----> `<html lang="ko">`
 
-### `yarn start`
+`<link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+`<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />`
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+...삭제
 
-### `yarn test`
+`<title>React App</title>` ----> `<title>React Github Profile Finder</title>`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### 🐝 파일 삭제
+public/logo192.png
+public/logo512.png
+src/logo.svg
+....
 
-### `yarn build`
+등등...
+  
+## ✔️ 컴포넌트 구조잡기
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+📃 App.js
+```js
+import './App.css';
+import React from 'react';
+import SearchInput from './components/SearchInput';
+import SearchResult from './components/SearchResult';
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+function App() {
+  return (
+    <>
+      <SearchInput />
+      <SearchResult />
+    </>
+  );
+}
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+export default App;
+```
 
-### `yarn eject`
+📃 SearchInput.js
+```js
+import React from 'react';
+import { useState } from 'react';
+function SearchInput() {
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+  const [input, setInput] = useState(''); //input 값 조작
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  // 인풋값 변할 때 onchange 이벤트로 값 가져와서 set해줌
+  const handleChange = e => {
+    setInput(e.target.value);
+  };
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+  // onSubmit 이벤트 발생시 form 태그 속성 막기
+  const handleSubmit = e => {
+    e.preventDefault();
+  };
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="깃헙 아이디를 입력하세요"
+        value={input}
+        onChange={handleChange}
+      />
+    </form>
+  );
+}
 
-## Learn More
+export default SearchInput;
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+📃 SearchResult.js
+```js
+import React from 'react';
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+function SearchResult({ user }) {
+  return (
+    user && (
+      <div>
+        <img src={user.avatar_url} alt={user.name} />
+        <div>
+          <h2>{user.name}</h2>
+          <p>{user.bio}</p>
+          <ul>
+            <li>
+              <strong>Followers</strong> {user.followers}
+            </li>
+            <li>
+              <strong>Following</strong> {user.following}
+            </li>
+            <li>
+              <strong>Repos</strong> {user.public_repos}
+            </li>
+          </ul>
+        </div>
+      </div>
+    )
+  );
+}
 
-### Code Splitting
+export default SearchResult;
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```
 
-### Analyzing the Bundle Size
+## ✔️ API 연결하기 (Axios 사용), API 파일 분리
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+#### 🐝 폴더 생성
+```
+src
+ ㄴ components
+ ㄴ lib
+     ㄴ api.js 
+```
 
-### Making a Progressive Web App
+#### 🐝 Axios 라이브러리 다운
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+` $ yarn add axios`
 
-### Advanced Configuration
+📃 api.js
+```js
+import axios from 'axios';
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+// create을 사용하는 경우 호출 config 커스터마이징 가능
+// You can create a new instance of axios with a custom config
 
-### Deployment
+const client = axios.create({
+  baseURL: 'https://api.github.com/users/',
+});
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+export const getUserAPI = async userName => {
+  const data = await client.get(userName);
+  return data.data;
+};
 
-### `yarn build` fails to minify
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## ✔️ 데이터 하위 컴포넌트에 넘기기
+
+📃 App.js
+
+```js
+import { useState } from 'react';
+
+function App() {
+
+  // 유저 데이터 관리 - 초기화 null
+  const [user, setUser] = useState(null);
+  ...
+  return (
+    <>
+      <SearchInput />
+      <SearchResult user={user} />
+    </>
+  );
+```
+
+## ✔️ Input 값 연결하여 API 호출
+
+📃 App.js
+```js
+...
+import { getUserAPI } from './lib/api'; // API 함수 가져오기
+
+function App() {
+  ...
+  // 유저 호출 후 유저 데이터 set
+  const getUser = async userName => {
+    const data = await getUserAPI(userName);
+    setUser(data);
+  };
+
+  return (
+    <>
+      <SearchInput getUser={getUser} /> // 함수 props로 내려줌
+      <SearchResult user={user} />
+    </>
+  );
+}
+...
+
+```
+
+📃 SearchInput.js
+```js
+function SearchInput({ getUser }) 
+  // console.log(getUser); 함수를 넘겨받음
+  ...
+  
+  // onSubmit 이벤트 발생시 form 태그 속성 막고 API 호출
+    const handleSubmit = e => {
+      ...
+      getUser(input); // ** 프롭스로 받은 부모 컴포넌트 함수가 실행 됨
+      
+      /* const getUser = async userName => {
+          const data = await getUserAPI(userName);
+          setUser(data);
+        }; */
+        
+    };
+    
+    return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="깃헙 아이디를 입력하세요"
+        value={input}
+        onChange={handleChange}
+      />
+    </form>
+  );
+```
+
+
+## SCSS 이용해 Style 적용하기
+` $ yarn add  node-scss`
+
+## Input창 UX 개선
+
+## Promise 상태에 따른 UI 처리
+
+## Component 분리 및 사소한 Style 업데이트
