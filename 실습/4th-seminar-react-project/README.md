@@ -274,6 +274,7 @@ export default MainHeader;
 #### 🐝 scss 파일 작성
 
 📃 Card.scss
+
 📃 MemberList.scss
 
 #### 🐝 axios 다운
@@ -320,8 +321,11 @@ function MemberList({ history, match }) {
       setMembers(data); // [{}, {} ...]
     })();
   }, []);
-  ...
-  ...
+  const removeCard = e => {
+    e.stopPropagation(); // event bubbling 방지
+    /* todo : 삭제 이벤트 API 적용 */
+  };
+
   return (
     ...
   <hr />
@@ -355,10 +359,6 @@ import {
 
 function MemberList({ history, match }) {
   ...
-  const removeCard = e => {
-    e.stopPropagation(); // event bubbling 방지
-    /* todo : 삭제 이벤트 API 적용 */
-  };
 
   return (
     <div className="member-list">
