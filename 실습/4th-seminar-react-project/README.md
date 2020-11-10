@@ -23,6 +23,7 @@
 
 .App {
   min-width: 600px;
+  padding: 0.5rem 1rem;
 }
 ...
 ```
@@ -180,9 +181,12 @@ export default MemberDetail;
 ```js
 import './Button.scss';
 
-function Button({ text, textColor = '#444', onClickFunc }) {
+function Button({ text, textColor = '#444', onClickFunc, leftIcon }) {
+  console.log(leftIcon);
   return (
     <span className="button" style={{ color: textColor }} onClick={onClickFunc}>
+      {leftIcon && leftIcon.render()}
+      &nbsp;
       {text}
     </span>
   );
@@ -265,12 +269,168 @@ export default MainHeader;
 }
 ```
 
-## MemberList & Card Component 구현
+## ✔️ MemberList & Card Component 구현
 
-📃 .js
+#### 🐝 scss 파일 작성
+
+📃 Card.scss
+📃 MemberList.scss
+
+#### 🐝 axios 다운
+
+`$ yarn add axios`
+
+#### 🐝 api 연결 및 출력
+
+📃 src/lib/api/memberApi.js
 
 ```js
+import axios from 'axios';
+const getMemberUrl =
+  'http://ec2-13-124-127-8.ap-northeast-2.compute.amazonaws.com:3000/api/members';
 
+const getMembersAPI = async () => {
+  try {
+    const { data } = await axios.get(`${getMemberUrl}`);
+    console.log('[SUCCESS] GET MEMBERS', data);
+    return data;
+  } catch (e) {
+    console.error('[FAIL] GET MEMBERS', e);
+  }
+};
+
+export default getMembersAPI;
+```
+
+📃 MemberList.js
+
+```js
+import { useEffect, useState } from 'react';
+// API
+import getMembersApi from '../../lib/api/memberApi';
+
+
+function MemberList({ history, match }) {
+  // members 데이터 관리
+  const [members, setMembers] = useState([]);
+  // mounted - call Api IIFE
+  useEffect(() => {
+    (async () => {
+      const { data } = await getMembersApi();
+      setMembers(data); // [{}, {} ...]
+    })();
+  }, []);
+  ...
+  ...
+  return (
+    ...
+  <hr />
+    <div className="member-list-content-wrapper">
+      {members.map((member, i) => (
+        <Card
+          key={'card-' + i}
+          route={{ history, match }}
+          memberData={member}
+          onRemoveCard={removeCard}
+        />
+      ))}
+    </div>
+  )
+```
+
+#### 🐝 MemberList 나머지 부분 작성
+
+📃 MemberList.js
+
+```js
+import './MemberList.scss';
+// 컴포넌트 및 아이콘
+import Button from '../../components/button/Button';
+import Card from '../../components/card/Card';
+import {
+  AppstoreOutlined,
+  DownOutlined,
+  SearchOutlined,
+} from '@ant-design/icons';
+
+function MemberList({ history, match }) {
+  ...
+  const removeCard = e => {
+    e.stopPropagation(); // event bubbling 방지
+    /* todo : 삭제 이벤트 API 적용 */
+  };
+
+  return (
+    <div className="member-list">
+      <div className="member-list__title">&#11088; 파트원 소개</div>
+      <div className="member-list__header member-list-header">
+        <div className="member-list-header__nav">
+          <AppstoreOutlined style={{ marginRight: '5px' }} />
+          Gallery view
+          <DownOutlined style={{ fontSize: '10px', marginLeft: '5px' }} />
+        </div>
+        <div className="member-list-header__empty"></div>
+        <Button text="Properties" textColor="#777"></Button>
+        <Button text="Filter" textColor="#777"></Button>
+        <Button text="Sort" textColor="#777"></Button>
+        <Button
+          text="Search"
+          textColor="#777"
+          leftIcon={SearchOutlined}
+        ></Button>
+        <Button text="..." textColor="#777"></Button>
+        <div className="new-btn new-btn__text">New</div>
+        <div className="new-btn new-btn__icon">
+          <DownOutlined />
+        </div>
+      </div>
+      ...
+  );
+}
+```
+
+#### 🐝 Card 컴포넌트 생성
+
+📃 Card.js
+
+```js
+import './Card.scss';
+import { DeleteOutlined, FileImageOutlined } from '@ant-design/icons';
+function Card({ route, memberData, onRemoveCard }) {
+  return (
+    <div
+      className="card"
+      onClick={() => route.history.push(`${route.match.path}/${memberData.id}`)}
+      draggable
+    >
+      <div className="remove-button" onClick={onRemoveCard}>
+        <DeleteOutlined style={{ fontSize: '16px' }} />
+      </div>
+      <div
+        className="image-area"
+        style={{
+          backgroundImage: `url(${memberData.profileUrl})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center center',
+        }}
+      >
+        {memberData.profileUrl === '' && (
+          <FileImageOutlined style={{ fontSize: '40px' }} />
+        )}
+      </div>
+      <div className="card__content card__text name">{memberData.name}</div>
+      <div className="card__content card__text instagram">
+        {memberData.instagram}
+      </div>
+      <div className="card__content card__text introduction">
+        {memberData.introduction}
+      </div>
+      <div className="card__content card__text mbti">{memberData.mbti}</div>
+    </div>
+  );
+}
+
+export default Card;
 ```
 
 ## Loading Component 구현

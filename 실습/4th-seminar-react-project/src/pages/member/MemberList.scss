@@ -1,2 +1,47 @@
 .member-list {
+  &__title {
+    font-size: 40px;
+    font-weight: 700;
+    margin: 30px 0;
+  }
+}
+.member-list-header {
+  display: flex;
+  &__nav {
+    text-align: center;
+    font-weight: 600;
+  }
+  &__empty {
+    flex: 1;
+  }
+}
+
+.member-list-content-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  margin: 0 -8px;
+}
+
+.new-btn {
+  display: flex;
+  border-radius: 5px;
+  background-color: #4aa5da;
+  color: #fff;
+  padding: 0.1rem 0.4rem;
+  align-items: center;
+  cursor: pointer;
+  margin-left: 2px;
+  &__text {
+    border-radius: 3px 0 0 3px;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  &__icon {
+    border-radius: 0 3px 3px 0;
+    font-size: 12px;
+    margin-left: -1px;
+  }
+  &:hover {
+    background-color: #3e8bb8;
+  }
 }
