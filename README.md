@@ -29,3 +29,14 @@
 - 데이터 하위 컴포넌트에 넘기기
 - API 연결하기 (Axios 사용), API 파일 분리
 - Input 값 연결하여 API 호출
+- scss 세팅 및 적용
+
+### 🐝 week4 리액트 프로젝트 #2 Notion App 만들기
+- React App 만들기, 불필요한 아이콘, 코드 삭제 및 변경
+- scss 세팅 및 적용
+- react-router-dom을 이용한 전체 Component 구성하기
+- MainHeader 만들기
+- 중첩 라우팅을 이용해 MemberList, MemberDetail 분리
+- MemberList & Card Component 구현
+- Loading Component 구현
+- MemberDetail Component 구현
