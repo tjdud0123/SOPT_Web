@@ -4,15 +4,32 @@
 
 ## ✔️ 불필요한 아이콘, 코드 삭제 및 변경
 
-## 컴포넌트 구조잡기
+## ✔️ scss 세팅 및 적용
 
-📃 .js
+` $ yarn add node-sass@4.14.1`
 
-```js
+📃 App.scss
 
+```css
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+.App {
+  min-width: 600px;
+}
+...
 ```
 
-## scss 세팅 및 적용
+📃 App.js
+
+```js
+import './App.scss';
+```
+
+## 컴포넌트 구조잡기
 
 📃 .js
 
