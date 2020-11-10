@@ -8,7 +8,8 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <MainHeader /> {/* global navigation bar */}
+        {/* global navigation bar */}
+        <Route component={MainHeader} />
         <Switch>
           {/* path에 따라 맞는 컴포넌트 출력 */}
           <Route exact path="/" component={Main} /> {/* 메인 화면 */}

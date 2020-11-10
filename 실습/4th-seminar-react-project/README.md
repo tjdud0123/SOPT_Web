@@ -152,12 +152,117 @@ function MemberDetail() {
 export default MemberDetail;
 ```
 
-## MainHeader 만들기
+## ✔️ MainHeader 만들기
 
-📃 .js
+#### 🐝 history push를 위해 route 컴포넌트로 변경
+
+📃 App.js
 
 ```js
+  ...
+  <div className="App">
+    {/* global navigation bar */}
+    <Route component={MainHeader} />
+    <Switch>
+    ...
+```
 
+#### 🐝 antd, antd/icons 다운
+
+`$ yarn add antd`
+
+`$ yarn add @ant-design/icons`
+
+#### 🐝 Button component 생성
+
+📃 Button.js
+
+```js
+import './Button.scss';
+
+function Button({ text, textColor = '#444', onClickFunc }) {
+  return (
+    <span className="button" style={{ color: textColor }} onClick={onClickFunc}>
+      {text}
+    </span>
+  );
+}
+
+export default Button;
+```
+
+📃 Button.scss
+
+```css
+.button {
+  border-radius: 4px;
+  padding: 4px 8px;
+  &:hover {
+    background: #eee;
+    cursor: pointer;
+  }
+  &:active {
+    background: #ccc;
+  }
+}
+```
+
+#### 🐝 header component 작성
+
+📃 MainHeader.js
+
+```js
+import './MainHeader.scss';
+import { MenuOutlined } from '@ant-design/icons';
+import Button from '../button/Button';
+
+function MainHeader({ history }) {
+  // history : { go, goBack, goForward, location, push ...}
+  return (
+    <header className="main-header">
+      <nav className="main-header__nav" id="left-gnb">
+        <MenuOutlined type="icon" className="main-header-icon" />
+        <Button
+          text="[ON SOPT] Web Part"
+          onClickFunc={() => history.push('/')}
+        ></Button>
+        <span>&nbsp;/&nbsp;</span>
+        <Button
+          text="파트원 소개"
+          onClickFunc={() => history.push('/member')}
+        ></Button>
+      </nav>
+      <nav className="main-header__nav" id="right-gnb">
+        <Button text="Share"></Button>
+        <Button text="Updates"></Button>
+        <Button text="Favorites"></Button>
+        <Button text="…"></Button>
+      </nav>
+    </header>
+  );
+}
+
+export default MainHeader;
+```
+
+📃 MainHeader.scss
+
+```css
+.main-header {
+  display: flex;
+  height: 45px;
+  padding: 12px;
+  font-size: 14px;
+  justify-content: space-between;
+  .empty {
+    flex: 1;
+  }
+  &-icon {
+    height: 100%;
+    margin-right: 12px;
+    cursor: pointer;
+  }
+}
 ```
 
 ## MemberList & Card Component 구현

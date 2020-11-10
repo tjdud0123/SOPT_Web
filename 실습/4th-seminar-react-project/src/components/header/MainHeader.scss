@@ -1,0 +1,15 @@
+.main-header {
+  display: flex;
+  height: 45px;
+  padding: 12px;
+  font-size: 14px;
+  justify-content: space-between;
+  .empty {
+    flex: 1;
+  }
+  &-icon {
+    height: 100%;
+    margin-right: 12px;
+    cursor: pointer;
+  }
+}
