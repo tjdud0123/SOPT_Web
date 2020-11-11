@@ -1,8 +1,8 @@
 import './MemberList.scss';
 import { useEffect, useState } from 'react';
 // 컴포넌트 및 아이콘
-import Button from '../../components/button/Button';
-import Card from '../../components/card/Card';
+import Button from '../../components/button';
+import Card from '../../components/card';
 import {
   AppstoreOutlined,
   DownOutlined,
