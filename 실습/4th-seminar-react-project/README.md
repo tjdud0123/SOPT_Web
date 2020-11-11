@@ -48,17 +48,45 @@ import './App.scss';
 
 ```
 #  폴더구조
-src
-  App.js
-  ㄴcomponents
-    ㄴheader
-      ㄴHeader.js
-  ㄴpages
-    ㄴmain
-      ㄴMain.js
-    ㄴmember
-      ㄴMemberList.js
-      ㄴMemberDetail.js
+├── package.json
+├── public
+│   └── index.html
+├── src
+│   ├── App.js
+│   ├── App.scss
+│   ├── components
+│   │   ├── button
+│   │   │   ├── Button.js
+│   │   │   ├── Button.scss
+│   │   │   └── index.js
+│   │   ├── card
+│   │   │   ├── Card.js
+│   │   │   ├── Card.scss
+│   │   │   └── index.js
+│   │   ├── header
+│   │   │   ├── MainHeader.js
+│   │   │   ├── MainHeader.scss
+│   │   │   └── index.js
+│   │   └── loading
+│   │       ├── Loading.js
+│   │       └── index.js
+│   ├── index.css
+│   ├── index.js
+│   ├── lib
+│   │   └── api
+│   │       └── memberApi.js
+│   └── pages
+│       ├── main
+│       │   └── Main.js
+│       └── member
+│           ├── Member.js
+│           ├── MemberDetail.js
+│           ├── MemberDetail.scss
+│           ├── MemberDetailContainer.js
+│           ├── MemberList.js
+│           └── MemberList.scss
+└── yarn.lock
+
 ```
 
 📃 App.js
@@ -182,7 +210,6 @@ export default MemberDetail;
 import './Button.scss';
 
 function Button({ text, textColor = '#444', onClickFunc, leftIcon }) {
-  console.log(leftIcon);
   return (
     <span className="button" style={{ color: textColor }} onClick={onClickFunc}>
       {leftIcon && leftIcon.render()}
@@ -603,7 +630,6 @@ import {
 
 // resolve 상태일 때 UI
 function MemberDetail({ onChangeInputs, memberState }) {
-  console.log(memberState);
   return (
     <div className="member-detail">
       <div className="member-detail__button-area">
