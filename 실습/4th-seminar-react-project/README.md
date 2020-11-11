@@ -1,4 +1,4 @@
-# 🧚 Reac로 Notion 따라하기
+# 🧚 Reatc로 Notion 따라하기
 
 <img src="https://im7.ezgif.com/tmp/ezgif-7-53d8c7ae6160.gif" alt="drawing" width="800"/>
 
