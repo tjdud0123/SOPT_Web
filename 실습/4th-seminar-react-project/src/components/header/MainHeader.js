@@ -1,6 +1,6 @@
 import './MainHeader.scss';
 import { MenuOutlined } from '@ant-design/icons';
-import Button from '../button/Button';
+import Button from '../button';
 
 function MainHeader({ history }) {
   // history : { go, goBack, goForward, location, push ...}

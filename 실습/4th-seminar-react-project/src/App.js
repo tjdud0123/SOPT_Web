@@ -2,7 +2,7 @@ import './App.scss';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Main from './pages/main/Main';
 import Member from './pages/member/Member';
-import MainHeader from './components/header/MainHeader';
+import MainHeader from './components/header';
 
 function App() {
   return (
