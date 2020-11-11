@@ -433,11 +433,75 @@ function Card({ route, memberData, onRemoveCard }) {
 export default Card;
 ```
 
-## Loading Component 구현
+## ✔️ Loading Component 구현
 
-📃 .js
+#### 🐝 Loading 컴포넌트 생성
+
+📃 Loading.js
 
 ```js
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+
+const antIcon = <LoadingOutlined style={{ fontSize: 40 }} spin />;
+
+function Loading() {
+  return (
+    <Spin
+      indicator={antIcon}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: '30px',
+        color: '#999',
+      }}
+    />
+  );
+}
+
+export default Loading;
+```
+
+#### 🐝 Loading 상태 관리
+
+📃 MemberList.js
+
+```js
+...
+import Loading from '../../components/loading/Loading';
+...
+function MemberList({ history, match }) {
+  ...
+  // 로딩 처리
+  const [isLoad, setIsLoad] = useState(false);
+  // mounted - call Api IIFE
+  useEffect(() => {
+    (async () => {
+      const { data } = await getMembersApi();
+      setMembers(data); // [{}, {} ...]
+      setIsLoad(true); // 데이터 셋팅 완료 이후 true로 변경
+    })();
+  }, []);
+  ...
+  return (
+    ...
+    <hr />
+      {!isLoad ? (
+        <Loading /> // 로딩이 완료 돠지 않았다면 Loading 컴포넌트
+      ) : ( // 로딩이 완료 돠었을 때
+        <div className="member-list-content-wrapper">
+          {members.map((member, i) => (
+            <Card
+              key={'card-' + i}
+              route={{ history, match }}
+              memberData={member}
+              onRemoveCard={removeCard}
+            />
+          ))}
+        </div>
+      )}
+  )
 
 ```
 

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 // 컴포넌트 및 아이콘
 import Button from '../../components/button';
 import Card from '../../components/card';
+import Loading from '../../components/loading';
 import {
   AppstoreOutlined,
   DownOutlined,
@@ -14,11 +15,14 @@ import getMembersApi from '../../lib/api/memberApi';
 function MemberList({ history, match }) {
   // members 데이터 관리
   const [members, setMembers] = useState([]);
+  // 로딩 처리
+  const [isLoad, setIsLoad] = useState(false);
   // mounted - call Api IIFE
   useEffect(() => {
     (async () => {
       const { data } = await getMembersApi();
       setMembers(data); // [{}, {} ...]
+      setIsLoad(true);
     })();
   }, []);
 
@@ -53,16 +57,20 @@ function MemberList({ history, match }) {
       </div>
 
       <hr />
-      <div className="member-list-content-wrapper">
-        {members.map((member, i) => (
-          <Card
-            key={'card-' + i}
-            route={{ history, match }}
-            memberData={member}
-            onRemoveCard={removeCard}
-          />
-        ))}
-      </div>
+      {!isLoad ? (
+        <Loading />
+      ) : (
+        <div className="member-list-content-wrapper">
+          {members.map((member, i) => (
+            <Card
+              key={'card-' + i}
+              route={{ history, match }}
+              memberData={member}
+              onRemoveCard={removeCard}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
