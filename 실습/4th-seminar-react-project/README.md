@@ -1,3 +1,7 @@
+# 🧚 Reac로 Notion 따라하기
+
+<img src="https://im7.ezgif.com/tmp/ezgif-7-53d8c7ae6160.gif" alt="drawing" width="800"/>
+
 ## ✔️ React Notion App 만들기
 
 `$ npx create-react-app 4th-seminar-react-project`
@@ -44,7 +48,7 @@ import './App.scss';
 
 #### 🐝 컴포넌트 구조 설계 및 구조짜기
 
-<img src="https://user-images.githubusercontent.com/22907830/98641951-f4c7aa00-236f-11eb-9ece-bc307f70ada6.png" alt="drawing" width="600"/>
+<img src="https://user-images.githubusercontent.com/22907830/98837151-eff51a00-2485-11eb-84d7-ce851e99121b.png" alt="drawing" width="600"/>
 
 ```
 #  폴더구조
