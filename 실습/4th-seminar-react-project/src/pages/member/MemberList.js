@@ -11,7 +11,7 @@ import {
 } from '@ant-design/icons';
 
 // API
-import getMembersApi from '../../lib/api/memberApi';
+import { getMembers } from '../../lib/api/memberApi';
 function MemberList({ history, match }) {
   // members 데이터 관리
   const [members, setMembers] = useState([]);
@@ -20,7 +20,7 @@ function MemberList({ history, match }) {
   // mounted - call Api IIFE
   useEffect(() => {
     (async () => {
-      const { data } = await getMembersApi();
+      const { data } = await getMembers();
       setMembers(data); // [{}, {} ...]
       setIsLoad(true);
     })();
@@ -58,7 +58,7 @@ function MemberList({ history, match }) {
 
       <hr />
       {!isLoad ? (
-        <Loading />
+        <Loading margin="30px" />
       ) : (
         <div className="member-list-content-wrapper">
           {members.map((member, i) => (

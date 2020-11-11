@@ -445,7 +445,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 40 }} spin />;
 
-function Loading() {
+function Loading({ margin }) {
   return (
     <Spin
       indicator={antIcon}
@@ -453,7 +453,7 @@ function Loading() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: '30px',
+        margin: margin,
         color: '#999',
       }}
     />
@@ -488,7 +488,7 @@ function MemberList({ history, match }) {
     ...
     <hr />
       {!isLoad ? (
-        <Loading /> // 로딩이 완료 돠지 않았다면 Loading 컴포넌트
+        <Loading margin="30px" /> // 로딩이 완료 돠지 않았다면 Loading 컴포넌트
       ) : ( // 로딩이 완료 돠었을 때
         <div className="member-list-content-wrapper">
           {members.map((member, i) => (
@@ -505,10 +505,217 @@ function MemberList({ history, match }) {
 
 ```
 
-## MemberDetail Component 구현
+## ✔️ MemberDetail Component 구현
 
-📃 .js
+#### 🐝 scss 파일 추가
+
+📃 MemberDetail.scss
+
+```css
+.member-detail {
+  width: 720px;
+  margin: 0 auto;
+  ...
+```
+
+#### 🐝 MemberDetailContainer 구현
+
+📃 Member.js
 
 ```js
+...
+import MemberDetailContainer from './MemberDetail';
 
+  ...
+  <Switch>
+    ...
+    <Route path={`${match.path}/:id`} component={MemberDetailContainer} />
+  </Switch>
+```
+
+📃 MemberDetailContainer.js
+
+```js
+import { useEffect, useState } from 'react';
+// UI 컴포넌트
+import MemberDetail from './MemberDetail';
+import Loading from '../../components/loading';
+
+function MemberDetailContainer({ match }) {
+  // match : {path: "/member/:id", url: "/member/1", params: {id: "1"…} ...}
+
+  // 데이터 관리
+  const [memberState, setMemberState] = useState({
+    status: 'idle',
+    member: null,
+  });
+
+  // 멤버 정보 수정시 상태 변화 적용
+  const onChangeInputs = evt => {
+    const { name, value } = evt.target;
+    setMemberState({
+      status: 'resolved',
+      member: {
+        ...memberState.member,
+        [name]: value, // name이라는 property가 아니라 변수를 속성으로 사용할 때는 [] 사용
+      },
+    });
+    /* todo : 서버에 update 로직이 필요 */
+  };
+
+  // switch 사용해서 member pomise 상태에 따라 loading 및 에러 처리 관리
+  switch (memberState.status) {
+    case 'pending':
+      return <Loading margin="200px" />;
+    case 'resolved':
+      return (
+        <MemberDetail
+          onChangeInputs={onChangeInputs}
+          memberState={memberState}
+        />
+      );
+    case 'rejected':
+      return <h1>해당 멤버가 없습니다</h1>;
+    case 'idle':
+    default:
+      return <div></div>;
+  }
+}
+
+export default MemberDetailContainer;
+```
+
+#### 🐝 MemberDetail UI 구현
+
+📃 MemberDetail.js
+
+```js
+import './MemberDetail.scss';
+
+// 컴포넌트 및 아이콘
+import Button from '../../components/button/Button';
+import { Input } from 'antd';
+import {
+  InstagramOutlined,
+  AlignLeftOutlined,
+  RadarChartOutlined,
+} from '@ant-design/icons';
+
+// resolve 상태일 때 UI
+function MemberDetail({ onChangeInputs, memberState }) {
+  console.log(memberState);
+  return (
+    <div className="member-detail">
+      <div className="member-detail__button-area">
+        <Button text="Add icon"></Button>
+        <Button text="Add cover"></Button>
+      </div>
+      <div className="member-detail__content name">
+        {memberState.member.name}
+      </div>
+      <hr style={{ borderTop: 'solid 1px #eee', marginBottom: '24px' }} />
+      <div className="member-detail__content">
+        <div className="content-title">
+          <InstagramOutlined />
+          &nbsp; 인스타 아이디
+        </div>
+        <Input
+          className="content-input"
+          bordered={false}
+          name="instagram"
+          value={memberState.member.instagram}
+          onChange={onChangeInputs}
+        />
+      </div>
+      <div className="member-detail__content">
+        <div className="content-title">
+          <AlignLeftOutlined />
+          &nbsp; 한 줄 소개
+        </div>
+        <Input
+          className="content-input"
+          bordered={false}
+          name="introduction"
+          value={memberState.member.introduction}
+          onChange={onChangeInputs}
+        />
+      </div>
+      <div className="member-detail__content">
+        <div className="content-title">
+          <RadarChartOutlined />
+          &nbsp; mbti
+        </div>
+        <Input
+          className="content-input"
+          bordered={false}
+          name="mbti"
+          value={memberState.member.mbti}
+          onChange={onChangeInputs}
+        />
+      </div>
+    </div>
+  );
+}
+
+export default MemberDetail;
+```
+
+#### 🐝 Api 추가 및 import 코드 수정 + 이름 수정
+
+📃 memberApi.js
+
+```js
+const getMembers = async () => {
+  ...
+};
+
+const getMemberById = async id => {
+  try {
+    const { data } = await axios.get(`${getMemberUrl}/${id}`);
+    console.log('[SUCCESS] GET MEMBER', data);
+    return data;
+  } catch (e) {
+    console.error('[FAIL] GET MEMBER', e);
+    throw e;
+  }
+};
+
+export { getMembers, getMemberById };
+```
+
+📃 MemberList.js
+
+```js
+import { getMembers } from '../../lib/api/memberApi';
+...
+function MemberList({ history, match }) {
+  ...
+  useEffect(() => {
+      ...
+      const { data } = await getMembers();
+      ...
+```
+
+📃 MemberDetailContainer.js
+
+```js
+// API
+import { getMemberById } from '../../lib/api/memberApi';
+
+function MemberDetailContainer({ match }) {
+  ...
+  // mounted - call Api IIFE
+  useEffect(() => {
+    (async () => {
+      try {
+        setMemberState({ status: 'pending', member: null });
+        const { data } = await getMemberById(match.params.id);
+        setMemberState({ status: 'resolved', member: data });
+      } catch (e) {
+        setMemberState({ status: 'rejected', member: null });
+      }
+    })();
+  }, []);
+  ...
+}
 ```

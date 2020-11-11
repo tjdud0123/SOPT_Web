@@ -3,7 +3,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 40 }} spin />;
 
-function Loading() {
+function Loading({ margin }) {
   return (
     <Spin
       indicator={antIcon}
@@ -11,7 +11,7 @@ function Loading() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: '30px',
+        margin: margin,
         color: '#999',
       }}
     />
