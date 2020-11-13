@@ -13,6 +13,8 @@
 - vanilla js
 - 다크 모드 토글
 
+<img src="https://media.vlpt.us/images/tjdud0123/post/78f117ba-4d17-4f74-bc44-384f6abe294a/%E1%84%83%E1%85%A1%E1%84%8F%E1%85%B3%E1%84%86%E1%85%A9%E1%84%83%E1%85%B3%E1%84%90%E1%85%A9%E1%84%80%E1%85%B3%E1%86%AF.gif" alt="drawing" width="400"/>
+
 ![](https://im6.ezgif.com/tmp/ezgif-6-f9111f500e55.gif)
 
 ### 🐝 week2 스터디 환경셋팅
@@ -40,3 +42,9 @@
 - MemberList & Card Component 구현
 - Loading Component 구현
 - MemberDetail Component 구현
+
+<img src="https://media.vlpt.us/images/tjdud0123/post/0e2a0756-6e2c-4457-9580-b760311ce6fd/notion_clone.gif" alt="drawing" width="600"/>
+
+### 🐝 week4 스터디 Notion App 에 리덕스 적용 
+- 리덕스 사용해서 store에 추가
+- 리덕스 미들웨어 사용해서 promise 처리하기
