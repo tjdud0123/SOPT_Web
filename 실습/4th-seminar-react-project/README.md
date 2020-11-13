@@ -1,6 +1,6 @@
 # 🧚 Reatc로 Notion 따라하기
 
-<img src="https://im7.ezgif.com/tmp/ezgif-7-53d8c7ae6160.gif" alt="drawing" width="800"/>
+<img src="https://media.vlpt.us/images/tjdud0123/post/0e2a0756-6e2c-4457-9580-b760311ce6fd/notion_clone.gif" alt="drawing" width="800"/>
 
 ## ✔️ React Notion App 만들기
 
