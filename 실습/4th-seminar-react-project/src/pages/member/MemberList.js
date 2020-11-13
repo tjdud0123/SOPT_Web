@@ -12,17 +12,27 @@ import {
 
 // API
 import { getMembers } from '../../lib/api/memberApi';
+
+// redux 사용
+import { setMembersToStore } from '../../modules/member';
+import { useDispatch } from 'react-redux';
+
 function MemberList({ history, match }) {
   // members 데이터 관리
   const [members, setMembers] = useState([]);
   // 로딩 처리
   const [isLoad, setIsLoad] = useState(false);
+  // action dispatch 정의
+  const dispatch = useDispatch();
+  const saveMembersToStore = data => dispatch(setMembersToStore(data));
   // mounted - call Api IIFE
   useEffect(() => {
     (async () => {
       const { data } = await getMembers();
       setMembers(data); // [{}, {} ...]
       setIsLoad(true);
+      // store에 저장
+      saveMembersToStore(data);
     })();
   }, []);
 
