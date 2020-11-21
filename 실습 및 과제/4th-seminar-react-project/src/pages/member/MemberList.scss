@@ -45,3 +45,18 @@
     background-color: #3e8bb8;
   }
 }
+
+.create-card {
+  height: 280px;
+  border: solid 1px #ddd;
+  border-radius: 8px;
+  margin: 8px;
+  box-shadow: 1px 1px 5px #ddd;
+  text-align: center;
+  line-height: 280px;
+  color: #777;
+  &:hover {
+    cursor: pointer;
+    background: #eee;
+  }
+}
