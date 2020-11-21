@@ -6,12 +6,12 @@ import { withRouter } from 'react-router-dom';
 // API
 import { deleteMemberById } from '../../lib/api/memberApi';
 
-function Card({ memberData, onRemoveCard, history }) {
+function Card({ memberData, RemoveCard, history }) {
   const onClickRemove = async evt => {
     evt.stopPropagation();
     try {
       await deleteMemberById(memberData.id);
-      onRemoveCard(memberData.id);
+      RemoveCard(memberData.id);
     } catch (e) {
       // fail
     }
