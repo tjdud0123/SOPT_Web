@@ -1,5 +1,4 @@
 import './MemberDetail.scss';
-
 // 컴포넌트 및 아이콘
 import Button from '../../components/button/Button';
 import { Input } from 'antd';
@@ -11,7 +10,6 @@ import {
 
 // resolve 상태일 때 UI
 function MemberDetail({ onChangeInputs, memberState }) {
-  console.log(memberState);
   return (
     <div className="member-detail">
       <div className="member-detail__button-area">
@@ -60,6 +58,15 @@ function MemberDetail({ onChangeInputs, memberState }) {
           value={memberState.member.mbti}
           onChange={onChangeInputs}
         />
+      </div>
+      <div className="member-detail__content">
+        {memberState.member.profileUrl && (
+          <img
+            className="content-image"
+            src={memberState.member.profileUrl}
+            alt={'profile url'}
+          />
+        )}
       </div>
     </div>
   );
