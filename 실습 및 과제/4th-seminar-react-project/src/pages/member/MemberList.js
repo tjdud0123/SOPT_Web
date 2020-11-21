@@ -1,5 +1,5 @@
 import './MemberList.scss';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 // 컴포넌트 및 아이콘
 import Button from '../../components/button';
 import Card from '../../components/card';
@@ -36,12 +36,8 @@ function MemberList({ history, match }) {
     })();
   }, []);
 
-  const removeCard = e => {
-    e.stopPropagation(); // event bubbling 방지
-    /* todo : 삭제 이벤트 API 적용 */
-  };
-
-  const onClickCreateCard = async () => {
+  const onClickCreateCard = useCallback(async () => {
+    console.log('create card');
     try {
       const data = await createMember({
         name: '',
@@ -54,11 +50,15 @@ function MemberList({ history, match }) {
     } catch (e) {
       // fail
     }
-  };
+  }, [members]);
 
-  const RemoveCard = async memberDataId => {
-    setMembers(members.filter(p => p.id !== memberDataId));
-  };
+  const RemoveCard = useCallback(
+    async memberDataId => {
+      console.log('remove card');
+      setMembers(members.filter(p => p.id !== memberDataId));
+    },
+    [members],
+  );
 
   return (
     <div className="member-list">
@@ -84,7 +84,6 @@ function MemberList({ history, match }) {
           <DownOutlined />
         </div>
       </div>
-
       <hr />
       {!isLoad ? (
         <Loading margin="30px" />
