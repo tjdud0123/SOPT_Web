@@ -1,13 +1,29 @@
 import './Card.scss';
 import { DeleteOutlined, FileImageOutlined } from '@ant-design/icons';
-function Card({ route, memberData, onRemoveCard }) {
+import { withRouter } from 'react-router-dom';
+/* withRouter 사용시 match push 안적어도 됨 */
+
+// API
+import { deleteMemberById } from '../../lib/api/memberApi';
+
+function Card({ memberData, onRemoveCard, history }) {
+  const onClickRemove = async evt => {
+    evt.stopPropagation();
+    try {
+      await deleteMemberById(memberData.id);
+      onRemoveCard(memberData.id);
+    } catch (e) {
+      // fail
+    }
+  };
+
   return (
     <div
       className="card"
-      onClick={() => route.history.push(`${route.match.path}/${memberData.id}`)}
+      onClick={() => history.push(`member/${memberData.id}`)}
       draggable
     >
-      <div className="remove-button" onClick={onRemoveCard}>
+      <div className="remove-button" onClick={onClickRemove}>
         <DeleteOutlined style={{ fontSize: '16px' }} />
       </div>
       <div
@@ -34,4 +50,4 @@ function Card({ route, memberData, onRemoveCard }) {
   );
 }
 
-export default Card;
+export default withRouter(Card);
