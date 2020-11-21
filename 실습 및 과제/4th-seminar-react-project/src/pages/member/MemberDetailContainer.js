@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import MemberDetail from './MemberDetail';
 import Loading from '../../components/loading';
 // API
-import { getMemberById } from '../../lib/api/memberApi';
+import { getMemberById, updateMemberById } from '../../lib/api/memberApi';
 
 function MemberDetailContainer({ match }) {
   // match : {path: "/member/:id", url: "/member/1", params: {id: "1"…} ...}
@@ -27,20 +27,38 @@ function MemberDetailContainer({ match }) {
     })();
   }, []);
 
-  // 멤버 정보 수정시 상태 변화 적용
-  const onChangeInputs = evt => {
-    const { name, value } = evt.target;
+  const setCurrentValue = memberData => {
     setMemberState({
       status: 'resolved',
-      member: {
-        ...memberState.member,
-        [name]: value, // name이라는 property가 아니라 변수를 속성으로 사용할 때는 [] 사용
-      },
+      member: memberData,
     });
-    /* todo : 서버에 update 로직이 필요 */
+  };
+  // 멤버 정보 수정시 상태 변화 적용 - 디바운싱 handle
+  const [timer, setTimer] = useState(0); // 디바운싱 타이머
+
+  const onChangeInputs = async evt => {
+    const { name, value } = evt.target;
+    const memberData = {
+      ...memberState.member,
+      [name]: value,
+    };
+    setCurrentValue(memberData);
+    // 디바운싱 - 마지막 호출만 적용
+    if (timer) {
+      console.log('clear timer');
+      clearTimeout(timer);
+    }
+    const newTimer = setTimeout(async () => {
+      try {
+        await updateMemberById(match.params.id, memberData);
+      } catch (e) {
+        console.error('error', e);
+      }
+    }, 800);
+    setTimer(newTimer);
   };
 
-  // switch 사용해서 member pomise 상태에 따라 loading 및 에러 처리 관리
+  // switch 사용해서 member promise 상태에 따라 loading 및 에러 처리 관리
   switch (memberState.status) {
     case 'pending':
       return <Loading margin="200px" />;
