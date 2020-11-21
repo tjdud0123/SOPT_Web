@@ -11,7 +11,7 @@ import {
 } from '@ant-design/icons';
 
 // API
-import { getMembers } from '../../lib/api/memberApi';
+import { getMembers, createMember } from '../../lib/api/memberApi';
 
 // redux 사용
 import { setMembersToStore } from '../../modules/member';
@@ -39,6 +39,25 @@ function MemberList({ history, match }) {
   const removeCard = e => {
     e.stopPropagation(); // event bubbling 방지
     /* todo : 삭제 이벤트 API 적용 */
+  };
+
+  const onClickCreateCard = async () => {
+    try {
+      const data = await createMember({
+        name: '',
+        profileUrl: '',
+        instagram: '',
+        introduction: '',
+        mbti: '',
+      });
+      setMembers([...members, data]);
+    } catch (e) {
+      // fail
+    }
+  };
+
+  const RemoveCard = async memberDataId => {
+    setMembers(members.filter(p => p.id !== memberDataId));
   };
 
   return (
@@ -74,11 +93,13 @@ function MemberList({ history, match }) {
           {members.map((member, i) => (
             <Card
               key={'card-' + i}
-              route={{ history, match }}
               memberData={member}
-              onRemoveCard={removeCard}
+              RemoveCard={RemoveCard}
             />
           ))}
+          <div className="create-card" onClick={onClickCreateCard}>
+            + New
+          </div>
         </div>
       )}
     </div>
